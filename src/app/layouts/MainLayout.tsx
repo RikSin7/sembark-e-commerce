@@ -4,7 +4,7 @@ import Footer from "../../shared/components/Footer"
 
 function MainLayout() {
     return (
-        <div className="min-h-screen flex flex-col">
+        <div className="min-h-screen flex flex-col mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
             <Header />
             <main className="flex-1">
                 <Outlet />
