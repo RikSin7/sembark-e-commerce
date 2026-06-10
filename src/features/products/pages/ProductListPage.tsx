@@ -5,7 +5,7 @@ import type { Product } from "../types";
 import ProductCard from "../components/ProductCard";
 import Loader from "../../../shared/components/Loader";
 import ErrorState from "../../../shared/components/ErrorState";
-import pageReload from "../../../shared/utils/PageReload";
+import pageReload from "../../../shared/utils/pageReload";
 
 function ProductListPage() {
   const [products, setProducts] = useState<Product[]>([]);

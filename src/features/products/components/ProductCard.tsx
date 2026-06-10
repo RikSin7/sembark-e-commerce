@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import type { Product } from "../types";
 import { useCart } from "../../cart/context/CartContext";
+import AddToCart from "../../../shared/components/AddToCart";
 
 interface ProductCardProps {
   product: Product;
@@ -25,15 +26,8 @@ function ProductCard({ product }: ProductCardProps) {
         <h3 className="font-semibold">{product.title}</h3>
         <p className="text-lg font-bold mt-2">${product.price}</p>
 
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            addToCart(product);
-          }}
-          className="mt-2 px-4 py-2 border rounded">
-          Add to Cart
-        </button>
-
+        <AddToCart onAdding={() => addToCart(product)} />
+          
       </div>
     </Link>
   );

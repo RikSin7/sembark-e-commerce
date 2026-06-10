@@ -6,13 +6,16 @@ import { getProductById } from "../api/productApi";
 import BackButton from "../../../shared/components/BackButton";
 import ErrorState from "../../../shared/components/ErrorState";
 import Loader from "../../../shared/components/Loader";
-import pageReload from "../../../shared/utils/PageReload";
+import pageReload from "../../../shared/utils/pageReload";
+import AddToCart from "../../../shared/components/AddToCart";
+import { useCart } from "../../cart/context/CartContext";
 
 function ProductDetailsPage() {
   const { id } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const { addToCart } = useCart();
 
 
   useEffect(() => {
@@ -56,9 +59,8 @@ function ProductDetailsPage() {
         ${product.price}
       </h2>
 
-      <button className="mt-6 px-4 py-2 border rounded">
-        Add To Cart
-      </button>
+      <AddToCart onAdding={() => addToCart(product)} />
+        
     </div>
   );
 }
