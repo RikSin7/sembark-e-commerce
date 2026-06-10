@@ -1,17 +1,18 @@
 import { Link } from "react-router-dom";
 import { useCart } from "../../features/cart/context/CartContext";
+import { ROUTES } from "../constants/routes";
 
 function Header() {
     const { cartItemsCount } = useCart();
     return (
         <header className="border-b">
             <div className="py-4 flex items-center justify-between">
-                <Link to="/" className="text-2xl font-bold">
+                <Link to={ROUTES.HOME} className="text-2xl font-bold">
                     Logo
                 </Link>
 
                 <Link
-                    to="/cart"
+                    to={ROUTES.CART}
                     className="px-4 py-2 border rounded-md font-medium relative"
                 >
                     Cart

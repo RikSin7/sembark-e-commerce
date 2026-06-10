@@ -6,7 +6,6 @@ import { getProductById } from "../api/productApi";
 import BackButton from "../../../shared/components/BackButton";
 import ErrorState from "../../../shared/components/ErrorState";
 import Loader from "../../../shared/components/Loader";
-import pageReload from "../../../shared/utils/pageReload";
 import AddToCart from "../../../shared/components/AddToCart";
 import { useCart } from "../../cart/context/CartContext";
 
@@ -17,28 +16,28 @@ function ProductDetailsPage() {
   const [error, setError] = useState("");
   const { addToCart } = useCart();
 
+  const fetchProduct = async () => {
+    try {
+      setLoading(true);
+      const data = await getProductById(id!);
+      setProduct(data);
+    } catch (error) {
+      console.error(error)
+      setError("Product not found");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        setLoading(true);
-        const data = await getProductById(id!);
-        setProduct(data);
-      } catch (error) {
-        console.error(error)
-        setError("Product not found");
-      } finally {
-        setLoading(false);
-      }
-    };
-
+    // eslint-disable-next-line
     fetchProduct();
   }, [id]);
 
   const thumbnail = product?.images?.[0] || 'https://via.placeholder.com/200';
 
   if (loading) return <Loader />;
-  if (!product) return <ErrorState message={error} onRetry={pageReload} />;
+  if (!product) return <ErrorState message={error} onRetry={fetchProduct} />;
 
   return (
     <div className="">
@@ -60,7 +59,7 @@ function ProductDetailsPage() {
       </h2>
 
       <AddToCart onAdding={() => addToCart(product)} />
-        
+
     </div>
   );
 }

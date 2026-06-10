@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import type { Product } from "../types";
 import { useCart } from "../../cart/context/CartContext";
 import AddToCart from "../../../shared/components/AddToCart";
+import { ROUTES } from "../../../shared/constants/routes";
 
 interface ProductCardProps {
   product: Product;
@@ -13,7 +14,7 @@ function ProductCard({ product }: ProductCardProps) {
 
   return (
     <Link
-      to={`/product/${product.id}`}
+      to={ROUTES.PRODUCT_DETAILS(String(product.id))}
       className="block border rounded-lg overflow-hidden hover:shadow-lg transition"
     >
       <img
@@ -27,7 +28,7 @@ function ProductCard({ product }: ProductCardProps) {
         <p className="text-lg font-bold mt-2">${product.price}</p>
 
         <AddToCart onAdding={() => addToCart(product)} />
-          
+
       </div>
     </Link>
   );

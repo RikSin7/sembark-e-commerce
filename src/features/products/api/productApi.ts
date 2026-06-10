@@ -16,3 +16,10 @@ export const getCategories = async (): Promise<Category[]> => {
   const response = await api.get<Category[]>(ENDPOINTS.CATEGORIES);
   return response.data;
 };
+
+export const getProductsByCategory = async (
+  categoryId: number
+): Promise<Product[]> => {
+  const response = await api.get<Product[]>(ENDPOINTS.PRODUCT_BY_CATEGORY(categoryId));
+  return response.data;
+};
