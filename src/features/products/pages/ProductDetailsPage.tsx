@@ -14,7 +14,6 @@ function ProductDetailsPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const thumbnail = product.images?.[0] || 'https://via.placeholder.com/200';
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -32,6 +31,8 @@ function ProductDetailsPage() {
 
     fetchProduct();
   }, [id]);
+
+  const thumbnail = product?.images?.[0] || 'https://via.placeholder.com/200';
 
   if (loading) return <Loader />;
   if (!product) return <ErrorState message={error} onRetry={pageReload} />;
