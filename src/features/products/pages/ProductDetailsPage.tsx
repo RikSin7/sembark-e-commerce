@@ -4,11 +4,17 @@ import { useParams } from "react-router-dom";
 import type { Product } from "../types";
 import { getProductById } from "../api/productApi";
 import BackButton from "../../../shared/components/BackButton";
+import ErrorState from "../../../shared/components/ErrorState";
+import Loader from "../../../shared/components/Loader";
+import pageReload from "../../../shared/utils/PageReload";
 
 function ProductDetailsPage() {
   const { id } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const thumbnail = product.images?.[0] || 'https://via.placeholder.com/200';
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -16,6 +22,9 @@ function ProductDetailsPage() {
         setLoading(true);
         const data = await getProductById(id!);
         setProduct(data);
+      } catch (error) {
+        console.error(error)
+        setError("Product not found");
       } finally {
         setLoading(false);
       }
@@ -24,14 +33,14 @@ function ProductDetailsPage() {
     fetchProduct();
   }, [id]);
 
-  if (loading) return <h2>Loading...</h2>;
-  if (!product) return <h2>Product not found</h2>;
+  if (loading) return <Loader />;
+  if (!product) return <ErrorState message={error} onRetry={pageReload} />;
 
   return (
     <div className="">
       <BackButton />
       <img
-        src={product.images[0]}
+        src={thumbnail}
         alt={product.title}
         className="w-full max-h-[500px] object-cover"
       />

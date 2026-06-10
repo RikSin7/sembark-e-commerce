@@ -1,9 +1,12 @@
 import AppRoutes from "./app/routes/AppRoutes"
+import { CartProvider } from "./features/cart/context/CartContext"
 
 function App() {
   return (
     <>
-      <AppRoutes />
+      <CartProvider>
+        <AppRoutes />
+      </CartProvider>
     </>
   )
 }

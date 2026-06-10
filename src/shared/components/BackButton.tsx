@@ -5,7 +5,7 @@ function BackButton() {
     return (
         <button
             onClick={() => navigate(-1)}
-            className="mb-4 px-4 py-2 border rounded"
+            className="my-4 px-4 py-2 border rounded"
         >
             Back
         </button>
