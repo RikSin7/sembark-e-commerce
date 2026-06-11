@@ -15,6 +15,7 @@ function ProductCard({ product }: ProductCardProps) {
   return (
     <article className="group flex flex-col bg-white border border-slate-200 rounded-2xl overflow-hidden hover:shadow-md hover:border-slate-300 transition-all duration-300 ease-in-out">
       <Link
+        data-testid="product-link"
         to={ROUTES.PRODUCT_DETAILS(String(product.id))}
         className="relative overflow-hidden aspect-4/3 block bg-slate-50"
       >

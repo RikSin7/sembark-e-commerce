@@ -25,6 +25,7 @@ function Header() {
                 </Link>
 
                 <Link
+                    data-testid="cart-link"
                     to={ROUTES.CART}
                     className="relative flex items-center justify-center p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-slate-900"
                     aria-label={`View Cart, ${cartItemsCount} items`}
