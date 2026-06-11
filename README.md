@@ -2,7 +2,7 @@
 
 A modern, responsive e-commerce application built with React, TypeScript, and Vite.
 
-**Live Demo**: [https://shoppy-sembark.vercel.app](https://shoppy-sembark.vercel.app)
+**Live Demo**: [https://shoppy-sembark.netlify.app](https://shoppy-sembark.netlify.app)
 
 ## 🛠️ Tech Stack
 
