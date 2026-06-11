@@ -55,7 +55,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         setCartItems((prev) => prev.filter((item) => item.id !== id));
     };
 
-    const clearCart = () => { 
+    const clearCart = () => {
         if (window.confirm("You have awesome items in your cart. you might not find these again. Still want to clear them? "))
             setCartItems([]);
     };

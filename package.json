@@ -8,8 +8,9 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
+    
   },
-  "dependencies": {
+  "dependencies": { 
     "@tailwindcss/vite": "^4.3.0",
     "axios": "^1.17.0",
     "clsx": "^2.1.1",
