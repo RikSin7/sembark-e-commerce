@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
+import { ShoppingBag, ArrowLeft, Trash2 } from "lucide-react";
 import { useCart } from "../context/CartContext";
+import CartItem from "../components/CartItem";
 
 function CartPage() {
   const {
@@ -12,75 +14,101 @@ function CartPage() {
 
   if (cartItems.length === 0) {
     return (
-      <div className="text-center py-4">
-        <h2 className="text-2xl font-semibold mb-4">Your cart is empty</h2>
-        <Link to="/" className="text-blue-600 hover:underline">
-          Continue Shopping →
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 flex flex-col items-center justify-center min-h-[50vh]">
+        <div className="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mb-6">
+          <ShoppingBag size={48} className="text-slate-300" />
+        </div>
+        <h2 className="text-2xl font-bold text-slate-900 mb-2">Your cart is empty</h2>
+        <p className="text-slate-500 mb-8 text-center max-w-md">
+          Looks like you haven't added anything to your cart yet. Explore our products and find something you love.
+        </p>
+        <Link
+          to="/"
+          className="flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-xl font-medium hover:bg-slate-800 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 active:scale-95"
+        >
+          <ArrowLeft size={18} />
+          <span>Start Shopping</span>
         </Link>
       </div>
     );
   }
 
   return (
-    <section className="py-4">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-bold">My Cart</h1>
-
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 pb-4 border-b border-slate-200">
+        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
+          Shopping Cart
+        </h1>
         <button
           onClick={clearCart}
-          className="px-4 py-2 border rounded"
+          className="mt-4 sm:mt-0 flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-red-500"
         >
-          Clear Cart
+          <Trash2 size={16} />
+          <span>Clear Cart</span>
         </button>
       </div>
 
-      <div className="space-y-4">
-        {cartItems.map((item) => (
-          <article
-            key={item.id}
-            className="border rounded-lg p-4 flex gap-4"
-          >
-            <img
-              src={item.images?.[0]}
-              alt={item.title}
-              className="w-24 h-24 object-cover rounded"
+      <div className="flex flex-col lg:flex-row lg:gap-8 gap-4">
+        {/* Cart Items list */}
+        <div className="flex-1 space-y-4">
+          {cartItems.map((item) => (
+            <CartItem
+              key={item.id}
+              item={item}
+              onRemove={() => removeFromCart(item.id)}
             />
+          ))}
 
-            <div className="flex-1">
-              <h2 className="font-semibold text-lg">
-                {item.title}
-              </h2>
+          <div className="pt-6 lg:block hidden">
+            <Link
+              to="/"
+              className="inline-flex group items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
+            >
+              <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-all duration-200" />
+              <span>Continue Shopping</span>
+            </Link>
+          </div>
+        </div>
 
-              <p className="mt-2 text-gray-600">
-                ${item.price}
-              </p>
+        {/* Order Summary sidebar */}
+        <div className="w-full lg:w-96 shrink-0">
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 lg:sticky lg:top-24">
+            <h2 className="text-lg font-bold text-slate-900 mb-4">Order Summary</h2>
+
+            <div className="space-y-3 text-sm text-slate-600 pb-4 border-b border-slate-200">
+              <div className="flex justify-between">
+                <span>Subtotal ({cartItemsCount} items)</span>
+                <span>${Number(cartTotalPrice).toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Shipping</span>
+                <span className="text-green-600 font-medium">Calculated at checkout</span>
+              </div>
+            </div>
+
+            <div className="flex justify-between items-center py-4 text-lg font-bold text-slate-900">
+              <span>Estimated Total</span>
+              <span>${Number(cartTotalPrice).toFixed(2)}</span>
             </div>
 
             <button
-              onClick={() => removeFromCart(item.id)}
-              className="h-fit px-3 py-2 border rounded"
+              className="w-full py-4 px-4 mt-2 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:ring-offset-2 active:scale-95"
             >
-              Remove
+              Proceed to Checkout
             </button>
-          </article>
-        ))}
+          </div>
+          <div className="pt-6 lg:hidden block">
+            <Link
+              to="/"
+              className="inline-flex group items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
+            >
+              <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-all duration-200" />
+              <span>Continue Shopping</span>
+            </Link>
+          </div>
+        </div>
       </div>
-
-      <div className="mt-8 border-t pt-4">
-        <p className="text-lg">
-          Total Items: <strong>{cartItemsCount}</strong>
-        </p>
-
-        <p className="text-lg mt-2">
-          Total Price: <strong>${cartTotalPrice}</strong>
-        </p>
-      </div>
-      <div className="mt-6">
-        <Link to="/" className="text-blue-600 hover:underline inline-flex items-center gap-1">
-          ← Continue Shopping
-        </Link>
-      </div>
-    </section>
+    </div>
   );
 }
 

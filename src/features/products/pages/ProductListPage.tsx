@@ -1,10 +1,10 @@
+import { useSearchParams } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 import Loader from "../../../shared/components/Loader";
 import ErrorState from "../../../shared/components/ErrorState";
 import useProducts from "../hooks/useProducts";
-import FilterPanel from "../components/FilterPanel";
-import { useSearchParams } from "react-router-dom";
-import SortDropdown from "../components/SortDropdown";
+import FilterDropdown from "../components/FilterDropdown"; 
+import SortDropdown from "../components/SortDropdown";    
 
 function ProductListPage() {
   const [searchParams] = useSearchParams();
@@ -17,12 +17,26 @@ function ProductListPage() {
   if (error) return <ErrorState message={error} onRetry={refetch} />;
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold mb-6">Products</h1>
-      <FilterPanel />
-      <SortDropdown />
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 bg-white">
+      {/*  Header*/}
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-4 border-b border-slate-200">
+        <div>
+          <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
+            Our Products
+          </h1>
+          <p className="mt-2 text-sm text-slate-500">
+            Showing {products.length} {products.length === 1 ? 'item' : 'items'}
+          </p>
+        </div>
 
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Filter and Sort */}
+        <div className="mt-4 md:mt-0 flex flex-row items-center gap-3">
+          <FilterDropdown />
+          <SortDropdown />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
