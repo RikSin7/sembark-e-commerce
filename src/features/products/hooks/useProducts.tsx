@@ -3,7 +3,7 @@ import { getProducts, getProductsByCategory } from "../api/productApi";
 import type { Product } from "../types";
 import sortProducts from "../../../shared/utils/sortProducts";
 
-export default function useProducts({ categories, sort }) {
+export default function useProducts({ categories, sort }: { categories: string; sort: string }) {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");

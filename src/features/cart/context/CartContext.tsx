@@ -33,7 +33,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }, [cartItems]);
 
     const cartItemsCount = cartItems.length;
-    const cartTotalPrice = cartItems.reduce((total, item) => total + item.price, 0);
+    const cartTotalPrice = cartItems.reduce((total, item) => total + (item.price * (item.quantity ?? 1)), 0);
 
     const getItemQuantity = (id: number) => cartItems.find(item => item.id === id)?.quantity || 0;
 
@@ -43,7 +43,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
             if (existingItem) {
                 return prev.map((item) =>
                     item.id === product.id
-                        ? { ...item, quantity: item.quantity + 1 }
+                        ? { ...item, quantity: (item.quantity ?? 1) + 1 }
                         : item
                 );
             }
